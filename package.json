@@ -1,0 +1,23 @@
+{
+  "name": "minecraft-turtle-control",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Coop25/Minecraft-Turtle-Control.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Coop25/Minecraft-Turtle-Control/issues"
+  },
+  "homepage": "https://github.com/Coop25/Minecraft-Turtle-Control#readme",
+  "dependencies": {
+    "ws": "^8.2.2"
+  }
+}
