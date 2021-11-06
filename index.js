@@ -1,6 +1,7 @@
 const WebSocket = require("ws");
 const { Server } = WebSocket;
 const BaseTurtle = require("./classes/baseTurtle");
+const controller = require("./commands/controller");
 
 const wss = new Server({port: 4220});
 
@@ -13,11 +14,14 @@ wss.on("connection", (ws)=>{
         console.log(message);
         if (message.sender === "controller" && message.token === token) {
           console.log(turtles.length)
-          turtles.forEach(turtle=>{
-            if (turtle.ws.readyState === WebSocket.OPEN) {
-              turtle.ws.send(JSON.stringify(message))
-            }
-          })
+          if (Object.keys(controller).includes(message.command)) {
+            controller[message.command](turtles, message, ws)
+            return
+          }
+          ws.send(JSON.stringify({
+            status: "ERROR",
+            message: `command: ${message.command} || NOT FOUND!`
+          }))
           return
         }
         if (message.state === "hello" && message.sender === "turtle") {
@@ -31,25 +35,21 @@ wss.on("connection", (ws)=>{
             turtles[turtlesArrIndex].setInventory(message.inventory)  
           }
         }
-        // if (message.broadcast === true) {
-        //     wss.clients.forEach(function each(client) {
-        //       if (client !== ws && client.readyState === WebSocket.OPEN) {
-        //         client.send(JSON.stringify(message));
-        //       }
-        //     });
-        // }
+        if (message.broadcast === true) {
+            wss.clients.forEach(function each(client) {
+              if (client !== ws && client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify(message));
+              }
+            });
+        }
     })
 
-    // setInterval(()=>{
-    //     ws.send(JSON.stringify({
-    //       action: "function",
-    //       test: `Hi!
-    //               NewLine!`,
-    //       func: `local bool, fuel = turtle.inspectDown()
-    //       print(fuel)
-    //       return fuel`
-    //     }))
-    // }, 1000)
+    setInterval(()=>{
+        ws.send(JSON.stringify({
+          action: "getInv",
+          broadcast: true
+        }))
+    }, 1000)
 
   //   setInterval(()=>{
   //     ws.send(JSON.stringify({

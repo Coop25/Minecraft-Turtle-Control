@@ -17,6 +17,16 @@ class Turtle {
         this.inventory = inv
         return this.inventory
     }
+
+    jsonData(){
+        return {
+            id           : this.id,
+            label        : this.label,
+            fuelLevel    : this.fuelLevel,
+            maxFuelLevel : this.maxFuelLevel,
+            inventory    : !this.inventory ? [] : this.inventory
+        }
+    }
 }
 
 module.exports = Turtle

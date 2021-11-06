@@ -34,19 +34,24 @@ function wsLoop()
                 state = "operations",
                 sender = "turtle"
             }
+            print(obj.action)
             if obj.action == 'function' then
+                print('function')
                 local func = loadstring(obj['func'])
                 local result = func()
                 response.data = result
             elseif obj.action == 'getInv' then
+                print('getInv')
                 response.inventory = {}
                 for i=1,16 do
                     response.inventory[i] = turtle.getItemDetail(i)
                 end
             elseif obj.action == 'wget' then
+                print('wget')
                 shell.run("delete", obj.program)
                 shell.run("wget", obj.url, obj.program)
             elseif obj.action == 'reboot' then
+                print('reboot')
                 shell.run("reboot")
             end
             response.fuelLevel = turtle.getFuelLevel() 
@@ -61,6 +66,7 @@ while true do
     term.clear()
 	term.setCursorPos(1,1)
 	if res == 'Terminated' then
+        print(status)
 		print("BEEP BEEP ... fuck you :)")
 		os.sleep(1)
 		print("I cannot let you do that!")
