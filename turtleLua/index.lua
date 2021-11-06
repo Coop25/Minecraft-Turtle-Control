@@ -1,5 +1,5 @@
 os.loadAPI("json")
-local utils = require("utils")
+local utils = require("utilities")
 
 function wsLoop()
     local ws,err = http.websocket("ws://turtles.ngrok.io")
@@ -26,6 +26,7 @@ function wsLoop()
                     response.inventory[i] = turtle.getItemDetail(i)
                 end
             elseif obj.action == 'wget' then
+                shell.run("delete", response.program)
                 shell.run("wget", response.url, response.program)
             elseif obj.action == 'reboot' then
                 shell.run("reboot")
