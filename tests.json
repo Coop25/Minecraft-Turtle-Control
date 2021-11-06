@@ -1,0 +1,12 @@
+[
+    {
+        "broadcast": true,
+        "func": "local fuel = turtle.getFuelLevel() \n print(fuel) \n return fuel",
+        "action": "function"
+    },
+    {
+        "broadcast": true,
+        "func": "local bool,block = turtle.inspectDown() \n return block",
+        "action": "function"
+    }
+]

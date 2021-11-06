@@ -4,11 +4,15 @@ this project is a fun side project to be able to control multiple computercraft 
 
 # TODO's
 
- [ ] Create Websocket server
- [ ] Connect Turtle to websocket server
- [ ] encode and decode json
- [ ] Move Turtle
- [ ] figure out more todo's
+ - [ ] Create Websocket server
+   - [ ] create ui to connect to WS server
+   - [ ] how does the ui look?
+ - [ ] Connect Turtle to websocket server
+   - [ ] Identify Turtle
+ - [ ] encode and decode json
+ - [ ] Move Turtle
+ - [ ] figure out more todo's
+ - [ ] create Turtle GPS in game
 
 # NOTES
  - JSON encode/decode:

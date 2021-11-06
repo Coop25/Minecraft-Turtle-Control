@@ -1,5 +1,5 @@
 os.loadAPI("json")
-local ws,err = http.websocket("ws://ThisIsTottalyARealFQDN.com:1234")
+local ws,err = http.websocket("ws://turtles.ngrok.io:4220")
 
 if err then
     print(err)
@@ -11,7 +11,8 @@ elseif ws then
         end
         local obj = json.decode(message)
         local response = {
-            id = os.getComputerID()
+            id = os.getComputerID(),
+            label = os.getComputerLabel()
         }
         if obj.action == 'function' then
             local func = loadstring(obj['func'])
@@ -19,7 +20,7 @@ elseif ws then
             response.data = result
         elseif obj.action == 'getInv' then
             response.inventory = {}
-            for i=1,16 then
+            for i=1,16 do
                 response.inventory[i] = turtle.getItemDetail(i)
             end
         end
