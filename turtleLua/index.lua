@@ -10,8 +10,18 @@ function wsLoop()
             id = os.getComputerID(),
             label = os.getComputerLabel(),
             state = "hello",
-            sender = "turtle"
+            sender = "turtle",
+            fuelLevel = turtle.getFuelLevel(), 
+            maxFuelLevel = turtle.getFuelLimit()
         }))
+        term.clear()
+        term.setCursorPos(1,1)
+        print("   Turtle: "...os.getComputerLabel())
+        print("       ID: "...os.getComputerID())
+        print("Connected: True")
+        print("=======================")
+        print("Message of the day!")
+        print("Enjoy CoopNet!")
         while true do
             local message = ws.receive()
             if message == nil then

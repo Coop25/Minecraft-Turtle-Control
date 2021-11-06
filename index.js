@@ -23,9 +23,13 @@ wss.on("connection", (ws)=>{
         if (message.state === "hello" && message.sender === "turtle") {
           // initialize turtle class
           turtles = turtles.filter(turtle=> turtle.id !== message.id);
-          turtles.push(new BaseTurtle(ws, message.id, message.label))
+          turtles.push(new BaseTurtle(ws, message.id, message.label, message.fuelLevel, message.maxFuelLevel))
         } else if (message.state === "operations" && message.sender === "turtle") {
-          
+          let turtlesArrIndex = turtles.findIndex(obj => obj.id === message.id)
+          turtles[turtlesArrIndex].setFuelLevel(message.fuelLevel)
+          if (message.inventory){
+            turtles[turtlesArrIndex].setInventory(message.inventory)  
+          }
         }
         // if (message.broadcast === true) {
         //     wss.clients.forEach(function each(client) {
