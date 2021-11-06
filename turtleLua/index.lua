@@ -26,8 +26,8 @@ function wsLoop()
                     response.inventory[i] = turtle.getItemDetail(i)
                 end
             elseif obj.action == 'wget' then
-                shell.run("delete", response.program)
-                shell.run("wget", response.url, response.program)
+                shell.run("delete", obj.program)
+                shell.run("wget", obj.url, obj.program)
             elseif obj.action == 'reboot' then
                 shell.run("reboot")
             end
