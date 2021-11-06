@@ -1,5 +1,5 @@
 os.loadAPI("json")
--- local utils = require("utilities")
+local utils = require("utilities")
 
 function wsLoop()
     local ws,err = http.websocket("ws://turtles.ngrok.io")
