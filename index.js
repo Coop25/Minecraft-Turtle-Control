@@ -18,11 +18,24 @@ wss.on("connection", (ws)=>{
 
     // setInterval(()=>{
     //     ws.send(JSON.stringify({
-    //         test: `Hi!
-    //                NewLine!`,
-    //         func: `local fuel = turtle.getFuelLevel()
-    //         print(fuel)
-    //         return`
+    //       action: "function",
+    //       test: `Hi!
+    //               NewLine!`,
+    //       func: `local bool, fuel = turtle.inspectDown()
+    //       print(fuel)
+    //       return fuel`
     //     }))
     // }, 1000)
+
+    setInterval(()=>{
+        ws.send(JSON.stringify({
+          action: "function",
+          test: `Hi!
+                  NewLine!`,
+          func: `local foo = shell.run("wget", "https://raw.githubusercontent.com/Coop25/Minecraft-Turtle-Control/master/turtleLua/index.lua", "startup")
+          shell.run("wget", "https://raw.githubusercontent.com/Coop25/Minecraft-Turtle-Control/master/turtleLua/utils.lua", "utils")
+          shell.run("reboot")
+          return`
+        }))
+    }, 1000)
 })
