@@ -63,8 +63,8 @@ end
 
 while true do
     local status, res = pcall(wsLoop)
-    term.clear()
-	term.setCursorPos(1,1)
+    -- term.clear()
+	-- term.setCursorPos(1,1)
 	if res == 'Terminated' then
         print(status)
 		print("BEEP BEEP ... fuck you :)")

@@ -44,12 +44,12 @@ wss.on("connection", (ws)=>{
         }
     })
 
-    setInterval(()=>{
-        ws.send(JSON.stringify({
-          action: "getInv",
-          broadcast: true
-        }))
-    }, 1000)
+    // setInterval(()=>{
+    //     ws.send(JSON.stringify({
+    //       action: "getInv",
+    //       broadcast: true
+    //     }))
+    // }, 1000)
 
   //   setInterval(()=>{
   //     ws.send(JSON.stringify({
