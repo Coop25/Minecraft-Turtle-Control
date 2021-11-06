@@ -6,3 +6,5 @@ class Turtle {
         this.label = label;
     }
 }
+
+module.exports = Turtle

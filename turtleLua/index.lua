@@ -20,7 +20,9 @@ function wsLoop()
             local obj = json.decode(message)
             local response = {
                 id = os.getComputerID(),
-                label = os.getComputerLabel()
+                label = os.getComputerLabel(),
+                state = "operations",
+                sender = "turtle"
             }
             if obj.action == 'function' then
                 local func = loadstring(obj['func'])

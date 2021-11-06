@@ -12,6 +12,7 @@ wss.on("connection", (ws)=>{
         message = JSON.parse(message);
         console.log(message);
         if (message.sender === "controller" && message.token === token) {
+          console.log(turtles.length)
           turtles.forEach(turtle=>{
             if (turtle.ws.readyState === WebSocket.OPEN) {
               turtle.ws.send(JSON.stringify(message))
@@ -23,6 +24,8 @@ wss.on("connection", (ws)=>{
           // initialize turtle class
           turtles = turtles.filter(turtle=> turtle.id !== message.id);
           turtles.push(new BaseTurtle(ws, message.id, message.label))
+        } else if (message.state === "operations" && message.sender === "turtle") {
+          
         }
         // if (message.broadcast === true) {
         //     wss.clients.forEach(function each(client) {
