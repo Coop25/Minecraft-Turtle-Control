@@ -1,6 +1,6 @@
 local utils = {}
 
-function utils.tunnel(length) {
+function utils.tunnel(length) 
     for i=1, length do
         turtle.dig()
         turtle.digUp()
@@ -10,7 +10,7 @@ function utils.tunnel(length) {
         turtle.back()
     end
     return
-}
+end
 
 
 return utils
