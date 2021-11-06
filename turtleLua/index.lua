@@ -6,6 +6,12 @@ function wsLoop()
     if err then
         print(err)
     elseif ws then
+        ws.send(json.encode({
+            id = os.getComputerID(),
+            label = os.getComputerLabel(),
+            state = "hello",
+            sender = "turtle"
+        }))
         while true do
             local message = ws.receive()
             if message == nil then

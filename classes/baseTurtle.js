@@ -1,6 +1,8 @@
 
 class Turtle {
-    constructor(socket) {
+    constructor(socket, id, label) {
         this.ws = socket
+        this.id = id;
+        this.label = label;
     }
 }

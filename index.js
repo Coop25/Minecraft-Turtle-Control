@@ -1,19 +1,36 @@
 const WebSocket = require("ws");
 const { Server } = WebSocket;
+const BaseTurtle = require("./classes/baseTurtle");
 
 const wss = new Server({port: 4220});
+
+let token = "asdf51g7e45w74q4fsd4fae68QWRE@!@44w5dr64s$5#@$"
+let turtles = []
 
 wss.on("connection", (ws)=>{
     ws.on("message", (message)=>{
         message = JSON.parse(message);
         console.log(message);
-        if (message.broadcast = true) {
-            wss.clients.forEach(function each(client) {
-                if (client !== ws && client.readyState === WebSocket.OPEN) {
-                  client.send(JSON.stringify(message));
-                }
-              });
+        if (message.sender === "controller" && message.token === token) {
+          turtles.forEach(turtle=>{
+            if (turtle.ws.readyState === WebSocket.OPEN) {
+              turtle.ws.send(JSON.stringify(message))
+            }
+          })
+          return
         }
+        if (message.state === "hello" && message.sender === "turtle") {
+          // initialize turtle class
+          turtles = turtles.filter(turtle=> turtle.id !== message.id);
+          turtles.push(new BaseTurtle(ws, message.id, message.label))
+        }
+        // if (message.broadcast === true) {
+        //     wss.clients.forEach(function each(client) {
+        //       if (client !== ws && client.readyState === WebSocket.OPEN) {
+        //         client.send(JSON.stringify(message));
+        //       }
+        //     });
+        // }
     })
 
     // setInterval(()=>{
@@ -39,11 +56,11 @@ wss.on("connection", (ws)=>{
   //     }))
   // }, 1000)
   // setInterval(()=>{
-  //     // ws.send(JSON.stringify({
-  //     //   action: "wget",
-  //     //   url: "https://raw.githubusercontent.com/Coop25/Minecraft-Turtle-Control/master/turtleLua/index.lua",
-  //     //   program: "startup"
-  //     // }))
+      // ws.send(JSON.stringify({
+      //   action: "wget",
+      //   url: "https://raw.githubusercontent.com/Coop25/Minecraft-Turtle-Control/master/turtleLua/index.lua",
+      //   program: "startup"
+      // }))
   //     ws.send(JSON.stringify({
   //       action: "wget",
   //       url: "https://raw.githubusercontent.com/Coop25/Minecraft-Turtle-Control/master/turtleLua/utils.lua",
