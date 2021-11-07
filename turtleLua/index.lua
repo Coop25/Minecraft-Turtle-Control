@@ -43,12 +43,14 @@ function wsLoop()
             elseif obj.action == 'getInv' then
                 print('getInv')
                 response.inventory = {}
+                local invCount = 1
                 for i=1,16 do
                     if turtle.getItemDetail(i) ~= nil then
-                        response.inventory[i] = {
+                        response.inventory[invCount] = {
                             slot = i,
                             data = turtle.getItemDetail(i)
                         }
+                        invCount = invCount + 1 
                     end
                 end
                 print('getInv')
