@@ -44,9 +44,10 @@ function wsLoop()
                 print('getInv')
                 response.inventory = {}
                 for i=1,16 do
-                    if turtle.getItemDetail(i) ~= nil then
-                        response.inventory[i] = turtle.getItemDetail(i)
-                    end
+                    response.inventory[i] = {
+                        slot: i,
+                        data: turtle.getItemDetail(i)
+                    }
                 end
                 print('getInv')
             elseif obj.action == 'wget' then
