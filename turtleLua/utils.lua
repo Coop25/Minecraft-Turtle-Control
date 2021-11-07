@@ -14,7 +14,7 @@ function utils.tunnel(length)
         while turtle.detect() do
             turtle.dig()
         end
-        turtle.back()
+        turtle.forward()
     end
     turtle.turnLeft()
     turtle.turnLeft()
