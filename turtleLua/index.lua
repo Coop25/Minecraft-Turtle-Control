@@ -45,8 +45,8 @@ function wsLoop()
                 response.inventory = {}
                 for i=1,16 do
                     response.inventory[i] = {
-                        slot: i,
-                        data: turtle.getItemDetail(i)
+                        slot = i,
+                        data = turtle.getItemDetail(i)
                     }
                 end
                 print('getInv')
