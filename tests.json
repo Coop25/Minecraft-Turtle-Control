@@ -8,5 +8,10 @@
         "broadcast": true,
         "func": "local bool,block = turtle.inspectDown() \n return block",
         "action": "function"
+    },
+    {
+        "broadcast": true,
+        "func": "local bool,block = turtle.inspectDown() \n return block",
+        "action": "function"
     }
 ]
