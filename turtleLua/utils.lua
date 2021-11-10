@@ -82,6 +82,40 @@ function moveToNextStrip()
     return
 end
 
+function checkWalls()
+    local bool, detail = turtle.inspectDown()
+    if contains(throwOut, detail.name) == false then
+        turtle.digDown()
+    end
+    turtle.turnLeft()
+    bool, detail = turtle.inspect()
+    if contains(throwOut, detail.name) == false then
+        turtle.dig()
+    end
+    turtle.up()
+    bool, detail = turtle.inspect()
+    if contains(throwOut, detail.name) == false then
+        turtle.dig()
+    end
+    bool, detail = turtle.inspectUp()
+    if contains(throwOut, detail.name) == false then
+        turtle.digUp()
+    end
+    turtle.turnLeft()
+    turtle.turnLeft()
+    bool, detail = turtle.inspect()
+    if contains(throwOut, detail.name) == false then
+        turtle.dig()
+    end
+    turtle.down()
+    bool, detail = turtle.inspect()
+    if contains(throwOut, detail.name) == false then
+        turtle.dig()
+    end
+    turtle.turnLeft()
+    return
+end
+
 function utils.tunnel(length, left, right, ws, response)
     local num = left+right+1
     while true do
@@ -90,9 +124,9 @@ function utils.tunnel(length, left, right, ws, response)
             while turtle.detect() do
                 turtle.dig()
             end
-            turtle.turnLeft()
             turtle.forward()
             turtle.digUp()
+            checkWalls()
             if placeLight == 7 then
                 placeLight = 1
                 turtle.turnLeft()
