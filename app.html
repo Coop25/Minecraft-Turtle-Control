@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+
+<html>
+   <head>
+      
+      <script type = "text/javascript">
+          WebSocketTest()
+         function WebSocketTest() {
+            
+            if ("WebSocket" in window) {
+            //    alert("WebSocket is supported by your Browser!");
+               
+               // Let us open a web socket
+               var ws = new WebSocket("ws://turtles.ngrok.io");
+				
+               ws.onopen = function() {
+                  
+                  // Web Socket is connected, send data using send()
+                //   ws.send("Message to send");
+               };
+				
+               ws.onmessage = function (evt) { 
+                  let received_msg = JSON.parse(evt.data);
+                  console.log(received_msg)
+                  document.getElementById("console").innerHTML = `
+          <span>
+              <a>${received_msg.label}</a>: ${received_msg.msg}
+          </span>
+          <hr>
+          ${document.getElementById("console").innerHTML}`
+               };
+				
+               ws.onclose = function() { 
+                  
+                  // websocket is closed.
+                //   alert("Connection is closed..."); 
+               };
+            } else {
+              
+               // The browser doesn't support WebSocket
+               alert("WebSocket NOT supported by your Browser!");
+            }
+         }
+      </script>
+
+      <style>
+          body {
+              margin: 0;
+              padding: 0;
+              background-color: #292B2F;
+          }
+          
+          .buttons {
+              min-height: 50%;
+          }
+
+          .console {
+            min-height: 25px;
+            background-color: #36393F;
+            color: white;
+            padding: 15px;
+            margin: 15px;
+            border-radius: 5px;
+            position: fixed;
+            bottom: 0%;
+            height: 50%;
+            left:5px;
+            right:5px;
+            overflow: auto;
+          }
+
+      </style>
+		
+   </head>
+   
+   <body>
+        <div class="buttons" id="buttons">
+            <div>
+
+            </div>
+        </div>
+        <div class="console" id="console">
+            <span>
+                <a>Samuel</a>: Hi
+            </span>
+            <hr>
+        </div>
+      
+   </body>
+</html>

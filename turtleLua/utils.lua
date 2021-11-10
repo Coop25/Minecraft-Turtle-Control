@@ -1,3 +1,4 @@
+os.loadAPI("json")
 local utils = {}
 
 
@@ -16,22 +17,23 @@ function isInvFull()
     return true
 end
 
-function checkInv()
+function checkInv(ws, response)
     if isInvFull() then 
         local detail = turtle.getItemDetail(2)
-        if detail.name == "minecraft:chest" then
-            if detail.count < 2 then
-                while true do
-                    local chestDetail = turtle.getItemDetail(2)
-                    if chestDetail > 2 then
-                        break
-                    end
+        if detail.count < 2 then
+            while true do
+                local chestDetail = turtle.getItemDetail(2)
+                if chestDetail > 2 then
+                    break
                 end
+                response.message = "Need more chests"
+                ws.send(json.encode(response))
+                sleep(2)
             end
-            turtle.digDown()
-            turtle.select(2)
-            turtle.placeDown()
         end
+        turtle.digDown()
+        turtle.select(2)
+        turtle.placeDown()
         for i = 3,16 do
             if turtle.getItemCount(i) > 0 then
                 turtle.select(i)
@@ -42,7 +44,7 @@ function checkInv()
     return
 end
 
-function utils.tunnel(length)
+function utils.tunnel(length, ws, response)
     local placeLight = 1 
     for i=1, length do
         while turtle.detect() do
@@ -64,7 +66,6 @@ function utils.tunnel(length)
     end
     turtle.turnLeft()
     turtle.turnLeft()
-    turtle.up()
     for i=1, length do
         while turtle.detect() do
             turtle.dig()
@@ -73,7 +74,6 @@ function utils.tunnel(length)
     end
     turtle.turnLeft()
     turtle.turnLeft()
-    turtle.down()
     return
 end
 
