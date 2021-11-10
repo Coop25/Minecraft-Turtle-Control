@@ -60,6 +60,7 @@ function checkInv(ws, response)
             end
         end
     end
+    turtle.select(3)
     return
 end
 
@@ -121,6 +122,7 @@ function utils.tunnel(length, left, right, ws, response)
     while true do
         local placeLight = 1 
         for i=1, length do
+            turtle.select(3)
             while turtle.detect() do
                 turtle.dig()
             end
