@@ -7,6 +7,7 @@ function isInvFull()
         local detail = turtle.getItemDetail(i)
         if detail ~= nil then
             if detail.name == "minecraft:cobblestone" then
+                turtle.select(i)
                 turtle.drop()
                 return false
             end
