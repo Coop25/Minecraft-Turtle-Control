@@ -59,7 +59,14 @@ function wsLoop()
                 shell.run("delete", obj.program)
                 shell.run("wget", obj.url, obj.program)
             elseif obj.action == 'tunnel' then
-                utils.tunnel(obj.length, ws, response)
+                local left = 0
+                local right = 0
+                if obj.left ~= nil then
+                    left = obj.left
+                elseif obj.right ~= nil then
+                    right = obj.right
+                end
+                utils.tunnel(obj.length, left, right, ws, response)
             elseif obj.action == 'reboot' then
                 print('reboot')
                 shell.run("reboot")

@@ -1,12 +1,30 @@
 os.loadAPI("json")
 local utils = {}
 
+local throwOut = {
+    'create:granite_cobblestone',
+    'create:diorite_cobblestone',
+    'minecraft:dirt',
+    'minecraft:cobblestone',
+    'minecraft:stone',
+    'minecraft:granite'
+}
+
+
+local function contains(table, val)
+    for i=1,#table do
+       if table[i] == val then 
+          return true
+       end
+    end
+    return false
+ end
 
 function isInvFull()
     for i = 3, 16 do
         local detail = turtle.getItemDetail(i)
         if detail ~= nil then
-            if detail.name == "minecraft:cobblestone" then
+            if contains(throwOut, detail.name) then
                 turtle.select(i)
                 turtle.drop()
                 return false
@@ -45,36 +63,72 @@ function checkInv(ws, response)
     return
 end
 
-function utils.tunnel(length, ws, response)
-    local placeLight = 1 
-    for i=1, length do
-        while turtle.detect() do
-            turtle.dig()
-        end
-        turtle.forward()
-        turtle.digUp()
-        if placeLight == 7 then
-            placeLight = 1
+function moveToNextStrip()
+    while turtle.detect() do
+        turtle.dig()
+    end
+    turtle.forward()
+    turtle.digUp()
+    while turtle.detect() do
+        turtle.dig()
+    end
+    turtle.forward()
+    turtle.digUp()
+    while turtle.detect() do
+        turtle.dig()
+    end
+    turtle.forward()
+    turtle.digUp()
+    return
+end
+
+function utils.tunnel(length, left, right, ws, response)
+    local num = left+right+1
+    while true do
+        local placeLight = 1 
+        for i=1, length do
+            while turtle.detect() do
+                turtle.dig()
+            end
             turtle.turnLeft()
-            turtle.dig()
-            turtle.select(1)
-            turtle.place()
+            turtle.forward()
+            turtle.digUp()
+            if placeLight == 7 then
+                placeLight = 1
+                turtle.turnLeft()
+                turtle.dig()
+                turtle.select(1)
+                turtle.place()
+                turtle.turnRight()
+            else 
+                placeLight = placeLight + 1
+            end
+            checkInv()
+        end
+        turtle.turnLeft()
+        turtle.turnLeft()
+        for i=1, length do
+            while turtle.detect() do
+                turtle.dig()
+            end
+            turtle.forward()
+        end
+        turtle.turnLeft()
+        turtle.turnLeft()
+        if right > 0 then
             turtle.turnRight()
-        else 
-            placeLight = placeLight + 1
+            moveToNextStrip()
+            turtle.turnLeft()
+        elseif left > 0 then
+            turtle.turnLeft()
+            moveToNextStrip()
+            turtle.turnRight()
         end
-        checkInv()
-    end
-    turtle.turnLeft()
-    turtle.turnLeft()
-    for i=1, length do
-        while turtle.detect() do
-            turtle.dig()
+        num = num-1
+        if num == 0 then
+            break
         end
-        turtle.forward()
     end
-    turtle.turnLeft()
-    turtle.turnLeft()
     return
 end
 
