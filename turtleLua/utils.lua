@@ -21,17 +21,43 @@ local function contains(table, val)
  end
 
 function isInvFull()
+    local isEmptySlot = false
+    local testTable = {}
     for i = 3, 16 do
         local detail = turtle.getItemDetail(i)
         if detail ~= nil then
+            turtle.select(i)
             if contains(throwOut, detail.name) then
-                turtle.select(i)
                 turtle.drop()
-                return false
+                isEmptySlot = true
+            else 
+                if testTable[detail.name] ~= nil then
+                    local quantity = 0
+                    if (testTable[detail.name].free - detail.count) > 0 then
+                        quantity = detail.count
+                        testTable[detail.name].free = testTable[detail.name].free - detail.count
+                        turtle.transferTo(testTable[detail.name].slot, quantity)
+                    else
+                        quantity = testTable[detail.name].free
+                        turtle.transferTo(testTable[detail.name].slot, quantity)
+                        testTable[detail.name] = {
+                            slot = i,
+                            free = 64 - (detail.count - testTable[detail.name].free)
+                        }
+                    end
+                else
+                    testTable[detail.name] = {
+                        slot = i,
+                        free = 64 - detail.count
+                    }
+                end
             end
         else
-            return false
+            isEmptySlot = true
         end
+    end
+    if isEmptySlot == true then
+        return false
     end
     return true
 end
