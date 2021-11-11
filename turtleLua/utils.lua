@@ -23,7 +23,7 @@ local function contains(table, val)
 function isInvFull()
     local isEmptySlot = false
     local testTable = {}
-    for i = 3, 16 do
+    for i = 1, 16 do
         local detail = turtle.getItemDetail(i)
         if detail ~= nil then
             turtle.select(i)
